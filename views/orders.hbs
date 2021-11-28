@@ -1,0 +1,41 @@
+<h1>Активные заказы</h1>
+
+{{#if orders.length}}
+  <div class="row">
+  {{#each orders}}
+    <div class="col s4">
+      <div id="order" class="card">
+        <div class="card-content">
+          <span class="card-title">
+            Заказ <small>{{_id}}</small>
+          </span>
+          <p class="date">{{date}}</p>
+          <p><em>{{user.userId.name}}</em> ({{user.userId.email}})</p>
+
+          <ol>
+            {{#each flowers}}
+              <li>
+                {{flower.title}} (x<strong>{{count}}</strong>) x <span class="price">{{flower.price}}</span>
+              </li>
+            {{/each}}
+          </ol>
+
+          <hr>
+
+          <p>Доп.информация: {{info}}</p>
+
+          <hr>
+          <p>Стоимость: <span class="price">{{price}}</span></p>
+          <form method="POST" action="/orders/remove">
+            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+            <input type="hidden" name="id" value="{{_id}}">
+            <button type="submit" class="btn btm-small">Завершить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+  </div>
+{{else}}
+  <p>Заказов пока нет</p>
+{{/if}}
